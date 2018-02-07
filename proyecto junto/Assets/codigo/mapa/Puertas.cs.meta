@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3eb13b6319b40b24aa2a397bef75f6fc
+timeCreated: 1514466318
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - puertaVerical: {fileID: 1831693762796596, guid: 058a5bd312e06384dbb8068c79e9492f,
+      type: 2}
+  - puertaHorizontal: {fileID: 1843272330362066, guid: a2b7b4534bbd39041aafd2e1fa7003d2,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
