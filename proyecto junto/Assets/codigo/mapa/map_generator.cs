@@ -4,83 +4,32 @@ using UnityEngine;
 
 public class map_generator : MonoBehaviour {
 	public GameObject baldosa;
-	public GameObject pared;
-	public GameObject pared_top;
-	public GameObject suelo;
-	public GameObject columna;
+	public Sprite pared;
+	public Sprite pared_top;
+	public Sprite suelo;
+	public Sprite columna;
 	public GameObject [,] sala;
 	public GameObject jugador;
 	public Camera camara;
-	public int dimensionx;
-	public int dimensiony;
-	private int columnas;
-	private int filas;
+	int dimensionx = 10;
+	int dimensiony = 10;
+	int columnas = 0;
+	int filas = 0;
     private int tag;
 	
 
 
 	// Use this for initialization
 	void Start () {
+		sala = new GameObject[dimensionx,dimensiony];
 		for(; columnas < dimensionx; columnas++){
 			for(;filas < dimensiony;filas++){
-
-				if(columnas == dimensionx || filas == dimensiony || columnas == 0 || filas == 0){
-
-						
-						
-                        baldosa.layer = 8;
-						baldosa.GetComponent<BoxCollider2D>().isTrigger = false;
-						if(columnas == 0 ){
-							baldosa.GetComponent<SpriteRenderer>().sprite = pared.GetComponent<SpriteRenderer>().sprite;
-							if(filas == dimensiony){
-								sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
-							}
-
-
-						}else if(filas == 0){
-							baldosa.GetComponent<SpriteRenderer>().sprite = pared.GetComponent<SpriteRenderer>().sprite;
-
-						}else if(columnas == dimensionx){
-							baldosa.GetComponent<SpriteRenderer>().sprite = pared.GetComponent<SpriteRenderer>().sprite;
-							if(filas == dimensiony){
-								sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
-							}
-
-						}else if(filas == dimensiony){
-							baldosa.GetComponent<SpriteRenderer>().sprite = pared.GetComponent<SpriteRenderer>().sprite;
-							sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
-							baldosa.GetComponent<SpriteRenderer>().sprite = pared_top.GetComponent<SpriteRenderer>().sprite;
-						}
-                        if(columnas == 0  && filas == 0)
-                        {
-                            baldosa.tag = "esquina inferior izquierda";
-                        }else if(columnas == dimensionx && filas == 0)
-                        {
-                            baldosa.tag = "esquina inferior derecha";
-                        }else if(columnas == 0  && filas == dimensiony)
-                        {
-                            baldosa.tag = "esquina superior izquierda";
-                        }else if(columnas == dimensionx && filas == dimensiony)
-                        {
-                            baldosa.tag = "esquina superior derecha";
-                        }
-                        else
-                        {
-                            baldosa.tag = "muro";
-                        }
-					
-
-					}else{
-
-						baldosa.GetComponent<SpriteRenderer>().sprite = suelo.GetComponent<SpriteRenderer>().sprite;
-						baldosa.tag ="suelo" + tag;
-                        baldosa.layer = 9;
-						baldosa.GetComponent<BoxCollider2D>().isTrigger = true;
-
-					}
-					sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
+				
+				sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
 			}
+			filas = 0;
 		}
+
 		
 	}
 	
