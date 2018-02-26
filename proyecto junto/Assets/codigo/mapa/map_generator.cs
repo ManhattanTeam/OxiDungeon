@@ -27,37 +27,37 @@ public class map_generator : MonoBehaviour {
 	int auxY=0;
     private int tag=0;
 	
-
-
+   
 	// Use this for initialization
 	void Start () {
 		rooms = new room[1]; 
 		sala = new GameObject[dimensionx,dimensiony];
-		for(; columnas < dimensionx-1; columnas++){
+		for(; columnas < dimensionx; columnas++){
 			for(;filas < dimensiony;filas++){
-				if(columnas == 0 + auxX || filas == 0 + auxY || columnas == (dimensionx + auxX) -1 || filas == (dimensiony + auxY) - 1){
+				if(columnas == 0 + auxX || filas == 0 + auxY || columnas == (dimensionx + auxX) - 1 || filas == (dimensiony + auxY) - 1){
 
                         baldosa.layer = 8;
 						baldosa.GetComponent<BoxCollider2D>().isTrigger = false;
 						if(columnas == 0 + auxX){
 							baldosa.GetComponent<SpriteRenderer>().sprite = pared;
-							if(filas == (dimensiony + auxY) - 1){
-								sala[columnas,filas + 1] = Instantiate (baldosa, new Vector2 (columnas,filas + 1),transform.rotation);
-							}
+                            sala[columnas, filas] = Instantiate(baldosa, new Vector2(columnas, filas), transform.rotation);
 
+                        }else if (filas == (dimensiony + auxY)){
+                            baldosa.GetComponent<SpriteRenderer>().sprite = pared;
+                            sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
 
 						}else if(filas == 0 + auxY){
 							baldosa.GetComponent<SpriteRenderer>().sprite = pared;
 
-						}else if(columnas == (dimensionx + auxX) - 1){
+						}else if(columnas == (dimensionx + auxX)){
 							baldosa.GetComponent<SpriteRenderer>().sprite = pared;
-							if(filas == (dimensiony + auxY) - 1){
-								sala[columnas,filas + 1] = Instantiate (baldosa, new Vector2 (columnas,filas + 1),transform.rotation);
+							if(filas == (dimensiony + auxY)){
+								sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
 							}
 
-						}else if(filas == (dimensiony + auxY) - 1){
+						}else if(filas == (dimensiony + auxY)){
 							baldosa.GetComponent<SpriteRenderer>().sprite = pared;
-							sala[columnas,filas + 1] = Instantiate (baldosa, new Vector2 (columnas,filas + 1),transform.rotation);
+							sala[columnas,filas] = Instantiate (baldosa, new Vector2 (columnas,filas),transform.rotation);
 							baldosa.GetComponent<SpriteRenderer>().sprite = pared_top;
 						}
                         if(columnas == 0 + auxX && filas == 0 + auxY)
