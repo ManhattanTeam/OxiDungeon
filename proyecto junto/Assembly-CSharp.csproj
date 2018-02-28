@@ -61,6 +61,7 @@
      <Compile Include="Assets\codigo\mapa\generador_de_nivel.cs" />
      <Compile Include="Assets\codigo\mapa\map_generator.cs" />
      <Compile Include="Assets\codigo\mapa\Puertas.cs" />
+     <Compile Include="Assets\codigo\mapa\room.cs" />
      <Compile Include="Assets\codigo\menu\Exit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>A:/herramientas/unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
