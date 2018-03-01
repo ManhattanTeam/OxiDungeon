@@ -7,7 +7,10 @@ public class control_jugador : MonoBehaviour {
     [Range(0,100)]
     public float velocidad;
     Rigidbody2D rb;
-     SpriteRenderer sprites;
+    SpriteRenderer sprites;
+    float horizontal;
+    float vertical;
+
      public string tag;
     
 	
@@ -16,13 +19,16 @@ public class control_jugador : MonoBehaviour {
 	void Start () {
         sprites = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity =transform.forward * velocidad;
+        rb.velocity = transform.forward * velocidad;
 
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        vertical =  Input.GetAxis("Vertical") * velocidad * Time.deltaTime;
+        horizontal = Input.GetAxis("Horizontal") * velocidad * Time.deltaTime;
+
         if (Input.GetKey(KeyCode.D)) {
             transform.position += new Vector3(velocidad * Time.deltaTime, 0);
             sprites.flipX = false;
