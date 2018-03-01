@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class control_jugador : MonoBehaviour {
-	public float velocidad;
+    
+    [Range(0,100)]
+    public float velocidad;
+    Rigidbody2D rb;
      SpriteRenderer sprites;
      public string tag;
     
@@ -11,7 +14,9 @@ public class control_jugador : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-         sprites = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
+        sprites = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity =transform.forward * velocidad;
 
 		
 	}

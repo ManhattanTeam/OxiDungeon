@@ -22,70 +22,68 @@ public class map_generator : MonoBehaviour {
 	int filas = 0;
 	int auxX=0;
 	int auxY=0;
-    private int tag=0;
 
 
     // Use this for initialization
     void Start()
     {
-        //nsalas = UnityEngine.Random.Range(5,9);
+       //nsalas = UnityEngine.Random.Range(2,6);
         nsalas = 1;
         rooms = new room[nsalas];
         Rooms = new GameObject[nsalas]; 
         
         for(int i = 0;i < nsalas;i++){
-            //dimensionx = UnityEngine.Random.Range(9,37);
-            //dimensiony = UnityEngine.Random.Range(9,37);
+            
             sala = new GameObject[dimensionx, dimensiony + 1];
-            Rooms[0] = Instantiate(Room,new Vector2(auxX,auxY),transform.rotation);
-            rooms[0] = Rooms[0].GetComponent<room>();
+            Rooms[i] = Instantiate(Room,new Vector2(0,0),transform.rotation);
+            rooms[i] = Rooms[i].GetComponent<room>();
 
         
             for (; columnas < dimensionx; columnas++)
             {
                 for (; filas < dimensiony; filas++)
                 {
-                    if (columnas == 0 + auxX || filas == 0 + auxY || columnas == (dimensionx + auxX) - 1 || filas == (dimensiony + auxY) - 1)
+                    if (columnas == 0  || filas == 0  || columnas == dimensionx  - 1 || filas == dimensiony - 1)
                     {
 
                         baldosa.layer = 8;
                         baldosa.GetComponent<BoxCollider2D>().isTrigger = false;
-                        if (columnas == 0 + auxX)
+                        if (columnas == 0 )
                         {
                             baldosa.GetComponent<SpriteRenderer>().sprite = pared;
 
                         }
-                        else if (filas == (dimensiony + auxY) - 1 && (columnas != 0 + auxX && columnas != (dimensionx - 1) + auxX))
+                        else if (filas == dimensiony - 1 && (columnas != 0 && columnas != dimensionx - 1))
                         {
                             baldosa.GetComponent<SpriteRenderer>().sprite = pared;
                             sala[columnas, filas + 1] = Instantiate(baldosa, new Vector2(columnas, filas + 1), transform.rotation);
-                            sala[columnas,filas + 1].transform.parent = Rooms[0].transform;
+                            sala[columnas,filas + 1].transform.parent = Rooms[i].transform;
                             baldosa.GetComponent<SpriteRenderer>().sprite = pared_top;
 
                         }
-                        else if (filas == 0 + auxY)
+                        else if (filas == 0)
                         {
                             baldosa.GetComponent<SpriteRenderer>().sprite = pared;
 
                         }
-                        else if (columnas == (dimensionx + auxX) - 1)
+                        else if (columnas == dimensionx - 1)
                         {
                             baldosa.GetComponent<SpriteRenderer>().sprite = pared;
 
                         }
-                        if (columnas == 0 + auxX && filas == 0 + auxY)
+                        if (columnas == 0 && filas == 0)
                         {
                             baldosa.tag = "esquina inferior izquierda";
                         }
-                        else if (columnas == dimensionx + auxX - 1 && filas == 0 + auxY)
+                        else if (columnas == dimensionx - 1 && filas == 0)
                         {
                             baldosa.tag = "esquina inferior derecha";
                         }
-                        else if (columnas == 0 + auxX && filas == dimensiony + auxY - 1)
+                        else if (columnas == 0 && filas == dimensiony - 1)
                         {
                             baldosa.tag = "esquina superior izquierda";
                         }
-                        else if (columnas == dimensionx + auxX - 1 && filas == dimensiony + auxY - 1)
+                        else if (columnas == dimensionx - 1 && filas == dimensiony - 1)
                         {
                             baldosa.tag = "esquina superior derecha";
                         }
@@ -100,21 +98,25 @@ public class map_generator : MonoBehaviour {
                     {
 
                         baldosa.GetComponent<SpriteRenderer>().sprite = suelo;
-                        baldosa.tag = "suelo" + tag;
+                        baldosa.tag = "suelo" + i;
                         baldosa.layer = 9;
                         baldosa.GetComponent<BoxCollider2D>().isTrigger = true;
 
                     }
 
                     sala[columnas, filas] = Instantiate(baldosa, new Vector2(columnas, filas), transform.rotation);
-                    sala[columnas,filas].transform.parent = Rooms[0].transform;
+                    sala[columnas,filas].transform.parent = Rooms[i].transform;
                 }
                 filas = 0;
             }
-        
-            rooms[0].GetSala(sala,dimensionx,dimensiony);
+            rooms[i].GetSala(sala,dimensionx,dimensiony);
             sala = null;
+            //dimensionx = UnityEngine.Random.Range(9,37);
+            //dimensiony = UnityEngine.Random.Range(9,37);
         }
+        Instantiate(jugador,Rooms[0].transform.position + new Vector3(dimensionx/2,dimensiony/2,0),transform.rotation);
+        Instantiate(camara,jugador.transform.position,transform.rotation); 
+        camara.transform.parent = jugador.transform;
 
     }
 
