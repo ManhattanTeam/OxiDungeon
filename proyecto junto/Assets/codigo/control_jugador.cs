@@ -13,7 +13,7 @@ public class control_jugador : MonoBehaviour {
 
      public string tag;
     
-	
+	//PRUEBA DE GUTHUB
 
 	// Use this for initialization
 	void Start () {
