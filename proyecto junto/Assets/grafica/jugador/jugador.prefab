@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1145968941343536}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.457092, y: 0.13580966, z: -1}
+  m_LocalPosition: {x: -79.292206, y: 90.7655, z: -1}
   m_LocalScale: {x: 2.5, y: 2.5, z: 9.278886}
   m_Children: []
   m_Father: {fileID: 0}
@@ -155,7 +155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidad: 400
-  tag: 
+  Bala: {fileID: 1147088926133678, guid: 638792193ae870d44aa4b6e46e2efc66, type: 2}
+  corazonVacio: {fileID: 21300000, guid: 358b572098ffd62469475a5f5bbf9511, type: 3}
+  corazonLleno: {fileID: 21300000, guid: 6149e4b11ac5eec4383a189f2d0f7fcd, type: 3}
+  vidas: 5
+  dashForce: 683
 --- !u!212 &212908584442654448
 SpriteRenderer:
   m_ObjectHideFlags: 1
