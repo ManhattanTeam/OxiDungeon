@@ -7,113 +7,70 @@ using UnityEngine.UI;
 
 public class IAEnemigo : MonoBehaviour
 {
-  
-    public float Velocidad;
-    public GameObject PrefabBala;
-    public LayerMask mask;
-    public Ruta ruta;
-    public int SalaDeVivencia;
 
-    private RaycastHit2D vision;
     private GameObject player;
-    private float tiempoDisparo = 0;
-    private float tiempoPersecucion = 11;
-    private bool SalaCorrecta;
 
-    void Awake()
+    [Range(0, 7)]
+    public float velocity;
+    private Rigidbody2D controller;
+    private Vector3 x, y;
+    Vector2 vectorMovimientoFinal;
+    private Animator anim;
+
+
+    void Start()
     {
 
         player = GameObject.FindWithTag("jugador");
         if (player) Debug.Log("Player encontrado");
 
-    }
+        controller = GetComponent<Rigidbody2D>();
+        x = new Vector3(1, 0, 0);
+        y = new Vector3(0, 1, 0);
 
-    public void setSala(int a) {
-
-        SalaDeVivencia = a;
-
-    }
-
-    private bool deteccionEnemigo()
-    {
-
-        vision = Physics2D.Raycast(transform.position, transform.up, 12, mask);
-
-        if (vision.collider.gameObject.tag == "jugador")
-        {
-            Debug.Log("Jugador Encontrado");
-            tiempoPersecucion = 0;
-            return true;
-        }
-        else
-        {
-            //Debug.Log("Jugador No Encontrado");
-            return false;
-        }
-    }
-
-    void persecucionActiva()
-    {
-
-        if (tiempoDisparo >= 1)
-        {
-
-            tiempoDisparo = 0;
-            Instantiate(PrefabBala, transform.position, player.transform.rotation);
-
-        }
+        anim = GetComponent<Animator>();
 
     }
 
-    void irAlJugador() {
-
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Velocidad * Time.deltaTime);
-
-    }
-
-    void Ruta()
-    {
-
-        ruta.nuevaPos(transform.position);
-        transform.position = Vector2.MoveTowards(transform.position, ruta.transform.position, Velocidad * Time.deltaTime); // Movimiento del enemigo a la ruta
-
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-
-        if (collision.tag == "suelo0" || collision.tag == "baldosa" || collision.tag == "bala" || collision.tag == "columna" || collision.tag == "jugador")
-            SalaCorrecta = true;
-        else
-            SalaCorrecta = false;
-
-        Debug.Log("El enemigo esta en la " + collision);
-
-    }
-
+ 
     void Update()
     {
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, velocity * Time.deltaTime);
 
-        if (SalaCorrecta)
+        setAnim();
+        anim.SetInteger("Direccion", setAnim());
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "jugador")
         {
-            tiempoPersecucion += Time.deltaTime;
-            tiempoDisparo += Time.deltaTime;
-
-            if (deteccionEnemigo() || tiempoPersecucion < 11)
-            {
-                persecucionActiva();
-                irAlJugador();
-
-            }
-            else
-            {
-
-                Ruta();
-
-            }
+            
+            Destroy(this.gameObject);
+            // Debug.Log(this);
         }
-        //else
-        //    Destroy(this.gameObject);
+    }
+
+    private int setAnim()
+    {
+
+        Vector3 direccionAnim = player.transform.position -  transform.position;
+        float distancia = direccionAnim.magnitude;
+        Vector3 direccion = direccionAnim / distancia;
+
+        if (direccion.x < 0) //DERECHA
+            return 2;
+        else if (direccion.x > 0) //Izquierda
+            return 4;
+        else if (direccion.y < 0) //ARRIBA
+            return 1;
+        else if (direccion.y > 0) //ABAJO
+            return 3;
+        else
+            return 5;
+
+
+
 
     }
 

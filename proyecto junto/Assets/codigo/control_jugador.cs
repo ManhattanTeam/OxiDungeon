@@ -4,60 +4,72 @@ using UnityEngine;
 
 public class control_jugador : MonoBehaviour {
     
-    [Range(0,100)]
+    [Range(0,500)]
     public float velocidad;
-    Rigidbody2D rb;
     SpriteRenderer sprites;
-    float horizontal;
-    float vertical;
+    Rigidbody2D controller;
+    Vector3 vectorMovimientoFinal;
+
+    Animator anim;
+
+    private Vector3 x, y;
+
 
      public string tag;
     
-	//PRUEBA DE GUTHUB
+
 
 	// Use this for initialization
 	void Start () {
-        sprites = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
-        rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.forward * velocidad;
 
-		
+        sprites = (SpriteRenderer)GetComponent(typeof(SpriteRenderer));
+        controller = GetComponent<Rigidbody2D>();
+        x = new Vector3(1, 0, 0);
+        y = new Vector3(0, 1, 0);
+        anim = GetComponent<Animator>();
+        		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        vertical =  Input.GetAxis("Vertical") * velocidad * Time.deltaTime;
-        horizontal = Input.GetAxis("Horizontal") * velocidad * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.D)) {
-            transform.position += new Vector3(velocidad * Time.deltaTime, 0);
-            sprites.flipX = false;
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            transform.position -= new Vector3(velocidad * Time.deltaTime, 0);
-            sprites.flipX = true;
-        }
-        if (Input.GetKey(KeyCode.W)) {
-            transform.position += new Vector3(0, velocidad * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            transform.position -= new Vector3(0, velocidad * Time.deltaTime);
-        }
-		
-	}
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        for (int n = 0; n < 9; n++)
-        {
-            if (collision.tag == "suelo" + n)
-            {
-                tag = "suelo" + n;
-               // Debug.Log("estas en la sala: " + n);
-            }
+        vectorMovimientoFinal = y * Input.GetAxis("Vertical")  + 
+                                x * Input.GetAxis("Horizontal") ;
 
-        }
+        controller.velocity = vectorMovimientoFinal * Time.deltaTime * velocidad;
+
+        setAnimations();
+        anim.SetInteger("Direccion", setAnimations());
+
 
     }
+
+    private int setAnimations() {
+
+
+        if (Input.GetAxis("Horizontal") > 0) //DERECHA
+            return 2;
+        else if (Input.GetAxis("Horizontal") < 0) //Izquierda
+            return 4;
+        else if (Input.GetAxis("Vertical") < 0) //ARRIBA
+            return 1;
+        else if (Input.GetAxis("Vertical") > 0) //ABAJO
+            return 3;
+        else
+            return 5;    
+
+
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "muro")
+            Debug.Log("muro");
+
+
+    }
+
     public string GetTag(){
         return tag;
     }

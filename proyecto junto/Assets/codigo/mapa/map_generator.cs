@@ -25,7 +25,7 @@ public class map_generator : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
        //nsalas = UnityEngine.Random.Range(2,6);
         nsalas = 1;
@@ -114,7 +114,7 @@ public class map_generator : MonoBehaviour {
             //dimensionx = UnityEngine.Random.Range(9,37);
             //dimensiony = UnityEngine.Random.Range(9,37);
         }
-        Instantiate(jugador,Rooms[0].transform.position + new Vector3(dimensionx/2,dimensiony/2,0),transform.rotation);
+        Instantiate(jugador,Rooms[0].transform.position + new Vector3(dimensionx/2,dimensiony/2,-1),transform.rotation);
         Instantiate(camara,jugador.transform.position,transform.rotation); 
         camara.transform.parent = jugador.transform;
 
